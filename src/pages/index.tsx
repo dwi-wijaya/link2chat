@@ -9,10 +9,11 @@ export default function Home() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isPasteClicked, setIsPasteClicked] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    // Periksa apakah event.target adalah elemen yang valid
+    if (dropdownRef.current && event.target instanceof Node && !dropdownRef.current.contains(event.target)) {
       setDropdownOpen(false); // Menutup dropdown jika klik di luar
     }
   };
