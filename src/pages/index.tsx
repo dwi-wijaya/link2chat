@@ -55,65 +55,59 @@ export default function Home() {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-900">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h1 className="text-2xl font-bold mb-4">WhatsApp Link Generator</h1>
-
-        {/* Country Code Dropdown */}
-
-
-        {/* Phone Number Input */}
-        <div className="flex items-center mb-4">
-          <div ref={dropdownRef} className="">
-            <button
-              className="flex items-center w-full p-2 border border-gray-300"
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-            >
-              <img src={selectedCountry.img} alt={selectedCountry.code} className="w-6 h-6 mr-2" />
-              {selectedCountry.dial_code}
-            </button>
-            {dropdownOpen && (
-              <div className="absolute z-10 mt-2 w-72 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto">
-                <input
-                  type="text"
-                  placeholder="Search country"
-                  className="p-2 w-full border-b"
-                  onChange={(e) => { }}
-                />
-                {countryCode.map((country) => (
-                  <button
-                    key={country.code}
-                    className="flex items-center w-full p-2 hover:bg-gray-100"
-                    onClick={() => handleSelectCountry(country)}
-                  >
-                    <img src={country.img} alt={country.code} className="w-6 h-6 mr-2" />
-                    {country.name} ({country.dial_code})
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+      <div className="bg-white p-4 rounded-lg shadow-lg w-96">
+        <div className="flex items-center mb-4 bg-neutral-50 border border-slate-200 rounded-md relative">
+          <button
+            className="flex items-center w-full pl-2 min-w-fit gap-0 flex-wrap"
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+          >
+            <Image width={0} height={0} sizes="100" src={selectedCountry.img} alt={selectedCountry.code} className="w-9 h-6 rounded-sm mr-2" />
+            <i className="fa fa-caret-down mr-2"></i>
+            <span className="leading-4">{selectedCountry.dial_code}</span>
+          </button>
+          {dropdownOpen && (
+            <div ref={dropdownRef} className="absolute z-[100] top-8 border border-neutral-300 bg-neutral-100 mt-4 w-full rounded shadow-sm max-h-60 overflow-y-auto">
+              <input
+                type="text"
+                placeholder="Search country"
+                className="p-2 w-full border-b sticky top-0 focus:outline-none"
+                onChange={(e) => { }}
+              />
+              {countryCode.map((country) => (
+                <button
+                  key={country.code}
+                  className="flex items-center w-full p-2 hover:bg-gray-100 "
+                  onClick={() => handleSelectCountry(country)}
+                >
+                  <Image width={0} height={0} sizes="100" src={country.img} alt={country.code} className="w-8 h-6 mr-2" />
+                  {country.name} ({country.dial_code})
+                </button>
+              ))}
+            </div>
+          )}
           <input
             type="text"
             value={phoneNumber}
             onChange={handleInputChange}
             placeholder="Enter phone number"
-            className="min-w-max p-2 border outline-none focus:outline-none"
+            className="min-w-max flex-1 p-2 bg-inherit outline-none focus:outline-none"
           />
           <button
-            className="p-2 bg-slate-200 min-w-16 max-w-16 rounded border border-neutral-200"
-            onClick={isPasteClicked ? clearInput : handlePaste}
+            className="pr-3 w-fit"
+            onClick={isPasteClicked || phoneNumber ? clearInput : handlePaste}
           >
-            {isPasteClicked ? 'Clear' : 'Paste'}
+            {isPasteClicked || phoneNumber ? <i className="fad fa-trash"></i> : <i className="fad fa-paste"></i>}
           </button>
         </div>
 
         {/* Generate WhatsApp Link Button */}
         <button
-          className={`w-full p-2 text-green-800 rounded disabled:bg-green-200 bg-green-300`}
+          className={`flex items-center group gap-2 justify-center w-full p-2 transition-all duration-300 text-green-800 border border-green-400 rounded disabled:bg-gray-100 bg-green-200 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-400`}
           onClick={generateWaLink}
           disabled={!phoneNumber}
         >
-          Generate WhatsApp Link
+          <i className="fa-duotone fa-solid fa-arrow-up-right-from-square"></i>
+          <span className="">Open in WhatsApp</span>
         </button>
       </div>
     </div>
