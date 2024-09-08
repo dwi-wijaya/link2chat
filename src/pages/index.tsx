@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { countryCode } from '../constants/country.js';
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,6 +9,20 @@ export default function Home() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isPasteClicked, setIsPasteClicked] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownOpen(false); // Menutup dropdown jika klik di luar
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownOpen]);
 
   const handleSelectCountry = (country: any) => {
     setSelectedCountry(country);
@@ -49,6 +63,7 @@ export default function Home() {
 
         {/* Phone Number Input */}
         <div className="flex items-center mb-4">
+          <div ref={dropdownRef} className="">
             <button
               className="flex items-center w-full p-2 border border-gray-300"
               onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -76,6 +91,7 @@ export default function Home() {
                 ))}
               </div>
             )}
+          </div>
           <input
             type="text"
             value={phoneNumber}
