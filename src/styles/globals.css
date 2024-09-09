@@ -1,3 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --foreground-color: rgb(89, 103, 122);
+    --background-color: rgb(248 250 252);
+    --container-color: rgb(241 245 249);
+    --primary-color: rgb(255, 127, 101);
+    --primary-bg: #ff985c4d;
+    --title-color: rgb(55, 67, 86);
+    --text-color: rgb(94, 92, 127);
+    --text-secondary: rgb(103, 117, 134);
+    --stroke-color: #e7e7e7;
+}
+
+.dark {
+    --foreground-color: rgb(143, 162, 187);
+    --background-color: rgb(34, 40, 49);
+    --container-color: rgb(46, 53, 65);
+    --primary-color: rgb(255, 159, 140);
+    --title-color: rgb(189 206 233);
+    --text-color: rgb(164, 181, 208);
+    --text-secondary: rgb(127, 145, 171);
+    --stroke-color: rgb(62, 68, 78);
+
+}
+
+body {
+    color: var(--foreground-color);
+    background: var(--background-color);
+
+}
+
+html {
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    letter-spacing: .3px;
+}

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { countryCode } from "../constants/country.js";
 import { Raleway } from "next/font/google";
 import axios from "axios";
-
+import ThemeToggle from '@/components/ThemeToggle';
 const raleway = Raleway({ subsets: ["latin"] });
 
 interface HomeProps {
@@ -101,45 +101,46 @@ const Home: React.FC<HomeProps> = () => {
 
   return (
     <div
-      className={`${raleway.className} flex justify-center items-center h-[100svh] bg-slate-50 w-full`}
+      className={`${raleway.className} flex justify-center items-center h-[100svh] w-full`}
     >
-      <div className="flex flex-col justify-between items-center p-6 h-full sm:h-3/4 bg-slate-100 w-full sm:w-[32rem] border border-slate-200 rounded-xl shadow-sm">
+      <div className="flex flex-col justify-between items-center p-6 h-full sm:h-3/4 bg-container w-full sm:w-[32rem] border border-stroke rounded-xl shadow-sm">
         <main>
+        <ThemeToggle/>
           <header className="text-center my-8">
-            <h1 className="text-4xl font-bold text-green-600 mb-4">
+            <h1 className="text-4xl font-bold text-green-500 dark:text-green-300 mb-4">
               Link2Chat
             </h1>
-            <p className="text-balance text-gray-700">
+            <p className="text-balance text-text">
               Simplify your communication! Easily generate a WhatsApp link and
               connect with anyone instantly.
             </p>
           </header>
 
-          <div className="bg-white flex flex-col gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg border border-slate-200 shadow-sm w-full">
-            <div className="flex items-center bg-neutral-50 border border-slate-200 rounded-md relative">
+          <div className="bg-white dark:bg-background flex flex-col gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg border border-stroke shadow-sm w-full">
+            <div className="flex items-center bg-container border border-stroke rounded-md relative">
               <button
                 title="Select country"
-                className="flex items-center bg-neutral- gap-2 text-slate-600 w-fit p-3 min-w-fit border-r border-slate-200 flex-wrap"
+                className="flex items-center bg-container gap-2 text-slate-600 w-fit p-3 min-w-fit border-r border-stroke flex-wrap"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                <i className="fal fa-circle-chevron-down"></i>
+                <i className="fal fa-circle-chevron-down text-title"></i>
               </button>
               {dropdownOpen && (
                 <div
                   ref={dropdownRef}
-                  className="absolute z-[100] top-8 border border-neutral-300 bg-neutral-50 mt-4 w-full rounded shadow-sm max-h-60 overflow-y-auto"
+                  className="absolute z-[100] top-8 border border-stroke bg-container mt-4 w-full rounded shadow-sm max-h-60 overflow-y-auto"
                 >
                   <input
                     type="text"
                     placeholder="Search country"
-                    className="p-2 w-full border-b sticky top-0 focus:outline-none"
+                    className="p-2 w-full bg-background border-b border-stroke sticky top-0 focus:outline-none"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                   {filteredCountries.map((country) => (
                     <button
                       key={country.code}
-                      className={`flex items-center justify-between w-full p-2 hover:bg-gray-100 pr-3  ${selectedCountry.dial_code === country.dial_code ? "font-semibold !bg-gray-200" : ""}`}
+                      className={`flex items-center justify-between w-full p-2 hover:bg-background pr-3  ${selectedCountry.dial_code === country.dial_code ? "font-semibold bg-background" : ""}`}
                       onClick={() => handleSelectCountry(country)}
                     >
                       <div className="flex items-center">
@@ -170,7 +171,7 @@ const Home: React.FC<HomeProps> = () => {
               />
               <button
                 title={isPasteClicked ? "Clear" : "Paste"}
-                className="pr-3 w-fit text-slate-600"
+                className="pr-3 w-fit text-title"
                 onClick={
                   isPasteClicked || phoneNumber ? clearInput : handlePaste
                 }
@@ -185,7 +186,7 @@ const Home: React.FC<HomeProps> = () => {
 
             {/* Generate WhatsApp Link Button */}
             <button
-              className={`flex items-center group gap-2 justify-center w-full p-2 transition-all duration-300 text-green-800 border border-green-400 rounded disabled:bg-gray-100 bg-green-200 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-400`}
+              className={`flex items-center group gap-2 justify-center w-full p-2 transition-all duration-300 text-green-800 border border-green-400 rounded disabled:bg-gray-200 dark:disabled:bg-gray-700 bg-green-200 disabled:cursor-not-allowed disabled:border-gray-300 dark:disabled:border-gray-600 disabled:text-subtext`}
               onClick={generateWaLink}
               disabled={!phoneNumber}
             >
@@ -195,7 +196,7 @@ const Home: React.FC<HomeProps> = () => {
           </div>
         </main>
 
-        <footer className="mt-8 text-center text-gray-600">
+        <footer className="mt-8 text-center text-subtext">
           <p>
             Created with ❤️ by <strong>Dwi</strong>
           </p>
@@ -204,7 +205,7 @@ const Home: React.FC<HomeProps> = () => {
               href="https://github.com/dwi-wijaya"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
+              className="text-blue-500 dark:text-blue-400 hover:underline"
             >
               GitHub Profile
             </a>
