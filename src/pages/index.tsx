@@ -28,7 +28,7 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
       event.target instanceof Node &&
       !dropdownRef.current.contains(event.target)
     ) {
-      setDropdownOpen(false); 
+      setDropdownOpen(false);
       setSearchQuery("");
     }
   };
@@ -77,23 +77,17 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-900">
+    <div
+      className={`flex justify-center items-center h-screen bg-gray-900`}
+    >
       <div className="bg-white p-4 rounded-lg shadow-lg w-96">
         <div className="flex items-center mb-4 bg-neutral-50 border border-slate-200 rounded-md relative">
           <button
-            className="flex items-center w-fit pl-2 min-w-fit gap-0 flex-wrap"
+            title="Select country"
+            className="flex items-center bg-neutral- gap-2 text-slate-600 w-fit p-3 min-w-fit border-r border-slate-200 flex-wrap"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
-            <Image
-              width={0}
-              height={0}
-              sizes="100"
-              src={selectedCountry.img}
-              alt={selectedCountry.code}
-              className="w-9 h-6 rounded-sm mr-2"
-            />
-            <i className="fa fa-caret-down mr-2"></i>
-            <span className="leading-4">{selectedCountry.dial_code}</span>
+            <i className="fal fa-circle-chevron-down"></i>
           </button>
           {dropdownOpen && (
             <div
@@ -110,22 +104,28 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
               {filteredCountries.map((country) => (
                 <button
                   key={country.code}
-                  className="flex items-center w-full p-2 hover:bg-gray-100 "
+                  className="flex items-center justify-between w-full p-2 hover:bg-gray-100 pr-3"
                   onClick={() => handleSelectCountry(country)}
                 >
-                  <Image
-                    width={0}
-                    height={0}
-                    sizes="100"
-                    src={country.img}
-                    alt={country.code}
-                    className="w-8 h-6 mr-2"
-                  />
-                  {country.name} ({country.dial_code})
+                  <div className="flex items-center">
+                    <Image
+                      width={0}
+                      height={0}
+                      sizes="100"
+                      src={country.img}
+                      alt={country.code}
+                      className="w-8 h-6 mr-2"
+                    />
+                    {country.name}
+                  </div>{" "}
+                  {country.dial_code}
                 </button>
               ))}
             </div>
           )}
+          <span className="leading-4 p-2 pr-0">
+            {selectedCountry.dial_code}
+          </span>
           <input
             type="text"
             value={phoneNumber}
@@ -134,14 +134,15 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
             className="min-w-max flex-1 p-2 bg-inherit outline-none focus:outline-none"
           />
           <button
-            className="pr-3 w-fit"
+            title={isPasteClicked ? "Clear" : "Paste"}
+            className="pr-3 w-fit text-slate-600"
             onClick={isPasteClicked || phoneNumber ? clearInput : handlePaste}
           >
-            {isPasteClicked || phoneNumber ? (
-              <i className="fad fa-trash"></i>
-            ) : (
-              <i className="fad fa-paste"></i>
-            )}
+            <i
+              className={`fad ${
+                isPasteClicked || phoneNumber ? "fa-trash" : "fa-paste"
+              }`}
+            />
           </button>
         </div>
 
