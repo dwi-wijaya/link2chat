@@ -128,7 +128,7 @@ const Home: React.FC<HomeProps> = () => {
               {dropdownOpen && (
                 <div
                   ref={dropdownRef}
-                  className="absolute z-[100] top-8 border border-stroke bg-background mt-4 w-full rounded shadow-sm max-h-60 overflow-y-auto"
+                  className="absolute z-[100] top-10 border border-stroke bg-background mt-4 w-full rounded shadow-sm max-h-60 overflow-y-auto"
                 >
                   <input
                     type="text"
