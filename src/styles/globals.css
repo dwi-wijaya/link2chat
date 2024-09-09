@@ -38,3 +38,9 @@ html {
     scrollbar-width: none;
     letter-spacing: .3px;
 }
+
+@layer utilities {
+    .base-transition{
+        @apply transition-all duration-75 ease-in-out
+    }
+}

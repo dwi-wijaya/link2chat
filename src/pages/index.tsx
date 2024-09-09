@@ -120,10 +120,10 @@ const Home: React.FC<HomeProps> = () => {
             <div className="flex items-center bg-container border border-stroke rounded-md relative">
               <button
                 title="Select country"
-                className="flex items-center bg-container gap-2 text-slate-600 w-fit p-3 min-w-fit border-r border-stroke flex-wrap"
+                className="group flex items-center bg-container gap-2 text-slate-600 w-fit p-3 min-w-fit border-r border-stroke flex-wrap"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                <i className="fal fa-circle-chevron-down text-title"></i>
+                <i className="fal group-hover:scale-105 base-transition fa-circle-chevron-down text-title"></i>
               </button>
               {dropdownOpen && (
                 <div
@@ -171,13 +171,13 @@ const Home: React.FC<HomeProps> = () => {
               />
               <button
                 title={isPasteClicked ? "Clear" : "Paste"}
-                className="pr-3 w-fit text-title"
+                className="group pr-3 w-fit text-title"
                 onClick={
                   isPasteClicked || phoneNumber ? clearInput : handlePaste
                 }
               >
                 <i
-                  className={`fad ${
+                  className={`group-hover:scale-105 base-transition fad ${
                     isPasteClicked || phoneNumber ? "fa-trash" : "fa-paste"
                   }`}
                 />
@@ -186,26 +186,26 @@ const Home: React.FC<HomeProps> = () => {
 
             {/* Generate WhatsApp Link Button */}
             <button
-              className={`flex items-center group gap-2 justify-center w-full p-2 transition-all duration-300 text-green-800 border border-green-400 rounded disabled:bg-gray-200 dark:disabled:bg-gray-700 bg-green-200 disabled:cursor-not-allowed disabled:border-gray-300 dark:disabled:border-gray-600 disabled:text-subtext`}
+              className={`groupflex items-center group gap-2 justify-center w-full p-2 transition-all duration-300 text-green-800 border border-green-400 rounded disabled:bg-gray-200 dark:disabled:bg-gray-700 bg-green-200 disabled:cursor-not-allowed disabled:border-gray-300 dark:disabled:border-gray-600 disabled:text-subtext`}
               onClick={generateWaLink}
               disabled={!phoneNumber}
             >
-              <i className="fa-duotone fa-solid fa-arrow-up-right-from-square"></i>
+              <i className="group-hover:scale-105 base-transition mr-2 fa-duotone fa-solid fa-arrow-up-right-from-square"></i>
               <span className="">Open in WhatsApp</span>
             </button>
           </div>
         </main>
 
         <footer className="mt-8 text-center text-subtext">
-          <p>
-            Created with ❤️ by <strong>Dwi</strong>
-          </p>
+          <div className="group">
+            Created with <i className="group-hover:scale-105 base-transition group-hover:mx-1 fas fa-heart text-red-500"></i> by <strong>Dwi</strong>
+          </div>
           <p>
             <a
               href="https://github.com/dwi-wijaya"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500 dark:text-blue-400 hover:underline"
+              className="text-blue-500 dark:text-blue-400 hover:underline underline-offset-4 decoration-1"
             >
               GitHub Profile
             </a>
