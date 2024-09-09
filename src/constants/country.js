@@ -1,11 +1,11 @@
 export const countryCode = [
-    { code: 'AG', dial_code: '+1268', name: 'Antigua and Barbuda', img: 'https://flagcdn.com/w40/ag.png' },
     { code: 'AF', dial_code: '+93', name: 'Afghanistan', img: 'https://flagcdn.com/w40/af.png' },
     { code: 'AL', dial_code: '+355', name: 'Albania', img: 'https://flagcdn.com/w40/al.png' },
     { code: 'DZ', dial_code: '+213', name: 'Algeria', img: 'https://flagcdn.com/w40/dz.png' },
     { code: 'AS', dial_code: '+1684', name: 'American Samoa', img: 'https://flagcdn.com/w40/as.png' },
     { code: 'AD', dial_code: '+376', name: 'Andorra', img: 'https://flagcdn.com/w40/ad.png' },
     { code: 'AO', dial_code: '+244', name: 'Angola', img: 'https://flagcdn.com/w40/ao.png' },
+    { code: 'AG', dial_code: '+1268', name: 'Antigua and Barbuda', img: 'https://flagcdn.com/w40/ag.png' },
     { code: 'AR', dial_code: '+54', name: 'Argentina', img: 'https://flagcdn.com/w40/ar.png' },
     { code: 'AM', dial_code: '+374', name: 'Armenia', img: 'https://flagcdn.com/w40/am.png' },
     { code: 'AU', dial_code: '+61', name: 'Australia', img: 'https://flagcdn.com/w40/au.png' },
