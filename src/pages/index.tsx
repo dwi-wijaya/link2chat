@@ -196,8 +196,8 @@ const Home: React.FC<HomeProps> = () => {
           </div>
         </main>
 
-        <footer className="mt-8 text-center text-subtext">
-          <div className="group">
+        <footer className="group mt-8 text-center text-subtext">
+          <div className="">
             Created with <i className="group-hover:scale-105 base-transition group-hover:mx-1 fas fa-heart text-red-500"></i> by <strong>Dwi</strong>
           </div>
           <p>
