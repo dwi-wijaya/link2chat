@@ -82,7 +82,7 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
     <div
       className={`${raleway.className} flex justify-center items-center h-[100svh] bg-slate-50 w-full`}
     >
-      <div className="flex flex-col justify-between items-center p-6 h-screen sm:h-3/4 bg-slate-100 w-full sm:w-[32rem] border border-slate-200 rounded-xl">
+      <div className="flex flex-col justify-between items-center p-6 h-screen sm:h-3/4 bg-slate-100 w-full sm:w-[32rem] border border-slate-200 rounded-xl shadow-sm">
         <main>
           <header className="text-center my-8">
             <h1 className="text-4xl font-bold text-green-600 mb-4">
@@ -94,7 +94,7 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
             </p>
           </header>
 
-          <div className="bg-white flex flex-col gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg shadow-md w-full">
+          <div className="bg-white flex flex-col gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg border border-slate-200 shadow-sm w-full">
             <div className="flex items-center bg-neutral-50 border border-slate-200 rounded-md relative">
               <button
                 title="Select country"
