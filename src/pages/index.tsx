@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { countryCode } from "../constants/country.js";
 import { Raleway } from "next/font/google";
+import axios from "axios";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -14,8 +15,10 @@ interface HomeProps {
   };
 }
 
-const Home: React.FC<HomeProps> = ({ initialCountry }) => {
-  const [selectedCountry, setSelectedCountry] = useState(initialCountry);
+const IPDATA_API_KEY = process.env.NEXT_PUBLIC_IPDATA;
+
+const Home: React.FC<HomeProps> = () => {
+  const [selectedCountry, setSelectedCountry] = useState(countryCode[0]);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isPasteClicked, setIsPasteClicked] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -33,7 +36,27 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
       setSearchQuery("");
     }
   };
+  useEffect(() => {
+    const fetchUserLocation = async () => {
+      try {
+        const response = await axios.get(`https://api.ipdata.co?api-key=${IPDATA_API_KEY}&fields=country_code`);
+        console.log(response.data);
+        // Set state dengan data lokasi user
+        const foundCountry = countryCode.find(
+          (country) => country.code === response.data.country_code
+        );
 
+        if (foundCountry) {
+          setSelectedCountry(foundCountry) ;
+        }
+        
+      } catch (error) {
+        console.error('Error fetching user location:', error);
+      }
+    };
+
+    fetchUserLocation();
+  }, []);
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -194,31 +217,3 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
   );
 };
 export default Home;
-
-export async function getServerSideProps(context: any) {
-  let userCountry = countryCode[0]; // Default country
-
-  try {
-    const resip = await fetch(
-      `https://api.ipdata.co?api-key=${process.env.NEXT_PUBLIC_IPDATA}&fields=country_code`
-    );
-    const data = await resip.json();
-    console.log(data);
-
-    const foundCountry = countryCode.find(
-      (country) => country.code === data.country_code
-    );
-
-    if (foundCountry) {
-      userCountry = foundCountry;
-    }
-  } catch (error) {
-    console.error("Error detecting location:", error);
-  }
-  console.log(userCountry);
-  return {
-    props: {
-      initialCountry: userCountry,
-    },
-  };
-}
