@@ -201,6 +201,7 @@ export async function getServerSideProps(context: any) {
   try {
     const res = await fetch(`https://ipapi.co/json/`);
     const data = await res.json();
+    console.log(data);
 
     const foundCountry = countryCode.find(
       (country) => country.code === data.country_code
