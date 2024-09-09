@@ -180,7 +180,7 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
           </p>
           <p>
             <a
-              href="https://github.com/dwi"
+              href="https://github.com/dwi-wijaya"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 hover:underline"
