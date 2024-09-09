@@ -1,61 +1,79 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useEffect, useRef, useState } from "react";
-import { countryCode } from '../constants/country.js';
+import { countryCode } from "../constants/country.js";
 const inter = Inter({ subsets: ["latin"] });
 
 interface HomeProps {
-  initialCountry: { code: string; dial_code: string; name: string; img: string };
+  initialCountry: {
+    code: string;
+    dial_code: string;
+    name: string;
+    img: string;
+  };
 }
 
 const Home: React.FC<HomeProps> = ({ initialCountry }) => {
   const [selectedCountry, setSelectedCountry] = useState(initialCountry);
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [isPasteClicked, setIsPasteClicked] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleClickOutside = (event: MouseEvent) => {
     // Periksa apakah event.target adalah elemen yang valid
-    if (dropdownRef.current && event.target instanceof Node && !dropdownRef.current.contains(event.target)) {
-      setDropdownOpen(false); // Menutup dropdown jika klik di luar
+    if (
+      dropdownRef.current &&
+      event.target instanceof Node &&
+      !dropdownRef.current.contains(event.target)
+    ) {
+      setDropdownOpen(false); 
+      setSearchQuery("");
     }
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownOpen]);
 
+  const filteredCountries = countryCode.filter(
+    (country) =>
+      country.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      country.dial_code.includes(searchQuery)
+  );
+
   const handleSelectCountry = (country: any) => {
     setSelectedCountry(country);
+    setSearchQuery("");
     setDropdownOpen(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const sanitizedValue = e.target.value.replace(/\D/g, ''); // Only allow numbers
+    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Only allow numbers
     setPhoneNumber(sanitizedValue);
   };
 
   const handlePaste = () => {
     navigator.clipboard.readText().then((clipText) => {
-      const sanitizedText = clipText.replace(/\D/g, ''); // Sanitize input
+      const sanitizedText = clipText.replace(/\D/g, ""); // Sanitize input
       setPhoneNumber(sanitizedText);
       setIsPasteClicked(true);
     });
   };
 
   const clearInput = () => {
-    setPhoneNumber('');
+    setPhoneNumber("");
     setIsPasteClicked(false);
   };
 
   const generateWaLink = () => {
     const fullPhoneNumber = selectedCountry.dial_code + phoneNumber;
     const waLink = `https://wa.me/${fullPhoneNumber}`;
-    window.open(waLink, '_blank');
+    window.open(waLink, "_blank");
   };
 
   return (
@@ -66,25 +84,43 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
             className="flex items-center w-fit pl-2 min-w-fit gap-0 flex-wrap"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
-            <Image width={0} height={0} sizes="100" src={selectedCountry.img} alt={selectedCountry.code} className="w-9 h-6 rounded-sm mr-2" />
+            <Image
+              width={0}
+              height={0}
+              sizes="100"
+              src={selectedCountry.img}
+              alt={selectedCountry.code}
+              className="w-9 h-6 rounded-sm mr-2"
+            />
             <i className="fa fa-caret-down mr-2"></i>
             <span className="leading-4">{selectedCountry.dial_code}</span>
           </button>
           {dropdownOpen && (
-            <div ref={dropdownRef} className="absolute z-[100] top-8 border border-neutral-300 bg-neutral-100 mt-4 w-full rounded shadow-sm max-h-60 overflow-y-auto">
+            <div
+              ref={dropdownRef}
+              className="absolute z-[100] top-8 border border-neutral-300 bg-neutral-100 mt-4 w-full rounded shadow-sm max-h-60 overflow-y-auto"
+            >
               <input
                 type="text"
                 placeholder="Search country"
                 className="p-2 w-full border-b sticky top-0 focus:outline-none"
-                onChange={(e) => { }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-              {countryCode.map((country) => (
+              {filteredCountries.map((country) => (
                 <button
                   key={country.code}
                   className="flex items-center w-full p-2 hover:bg-gray-100 "
                   onClick={() => handleSelectCountry(country)}
                 >
-                  <Image width={0} height={0} sizes="100" src={country.img} alt={country.code} className="w-8 h-6 mr-2" />
+                  <Image
+                    width={0}
+                    height={0}
+                    sizes="100"
+                    src={country.img}
+                    alt={country.code}
+                    className="w-8 h-6 mr-2"
+                  />
                   {country.name} ({country.dial_code})
                 </button>
               ))}
@@ -101,7 +137,11 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
             className="pr-3 w-fit"
             onClick={isPasteClicked || phoneNumber ? clearInput : handlePaste}
           >
-            {isPasteClicked || phoneNumber ? <i className="fad fa-trash"></i> : <i className="fad fa-paste"></i>}
+            {isPasteClicked || phoneNumber ? (
+              <i className="fad fa-trash"></i>
+            ) : (
+              <i className="fad fa-paste"></i>
+            )}
           </button>
         </div>
 
@@ -116,9 +156,9 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
         </button>
       </div>
     </div>
-  )
-}
-export default Home
+  );
+};
+export default Home;
 
 export async function getServerSideProps(context: any) {
   let userCountry = countryCode[0]; // Default country
@@ -135,7 +175,7 @@ export async function getServerSideProps(context: any) {
       userCountry = foundCountry;
     }
   } catch (error) {
-    console.error('Error detecting location:', error);
+    console.error("Error detecting location:", error);
   }
 
   return {
