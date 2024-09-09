@@ -103,7 +103,7 @@ const Home: React.FC<HomeProps> = () => {
     <div
       className={`${raleway.className} flex justify-center items-center h-[100svh] bg-slate-50 w-full`}
     >
-      <div className="flex flex-col justify-between items-center p-6 h-screen sm:h-3/4 bg-slate-100 w-full sm:w-[32rem] border border-slate-200 rounded-xl shadow-sm">
+      <div className="flex flex-col justify-between items-center p-6 h-full sm:h-3/4 bg-slate-100 w-full sm:w-[32rem] border border-slate-200 rounded-xl shadow-sm">
         <main>
           <header className="text-center my-8">
             <h1 className="text-4xl font-bold text-green-600 mb-4">
