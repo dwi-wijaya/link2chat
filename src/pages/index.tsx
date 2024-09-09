@@ -40,7 +40,6 @@ const Home: React.FC<HomeProps> = () => {
     const fetchUserLocation = async () => {
       try {
         const response = await axios.get(`https://api.ipdata.co?api-key=${IPDATA_API_KEY}&fields=country_code`);
-        console.log(response.data);
         // Set state dengan data lokasi user
         const foundCountry = countryCode.find(
           (country) => country.code === response.data.country_code
@@ -84,7 +83,6 @@ const Home: React.FC<HomeProps> = () => {
   const handlePaste = () => {
     navigator.clipboard.readText().then((clipText) => {
       const sanitizedText = clipText.replace(/\D/g, ""); // Sanitize input
-      console.log(sanitizedText);
       setPhoneNumber(sanitizedText);
       setIsPasteClicked(true);
     });
@@ -129,7 +127,7 @@ const Home: React.FC<HomeProps> = () => {
               {dropdownOpen && (
                 <div
                   ref={dropdownRef}
-                  className="absolute z-[100] top-8 border border-neutral-300 bg-neutral-100 mt-4 w-full rounded shadow-sm max-h-60 overflow-y-auto"
+                  className="absolute z-[100] top-8 border border-neutral-300 bg-neutral-50 mt-4 w-full rounded shadow-sm max-h-60 overflow-y-auto"
                 >
                   <input
                     type="text"
@@ -141,7 +139,7 @@ const Home: React.FC<HomeProps> = () => {
                   {filteredCountries.map((country) => (
                     <button
                       key={country.code}
-                      className="flex items-center justify-between w-full p-2 hover:bg-gray-100 pr-3"
+                      className={`flex items-center justify-between w-full p-2 hover:bg-gray-100 pr-3  ${selectedCountry.dial_code === country.dial_code ? "font-semibold !bg-gray-200" : ""}`}
                       onClick={() => handleSelectCountry(country)}
                     >
                       <div className="flex items-center">
