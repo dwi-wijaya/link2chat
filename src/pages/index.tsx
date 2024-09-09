@@ -4,8 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { countryCode } from '../constants/country.js';
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
-  const [selectedCountry, setSelectedCountry] = useState(countryCode[0]);
+interface HomeProps {
+  initialCountry: { code: string; dial_code: string; name: string; img: string };
+}
+
+const Home: React.FC<HomeProps> = ({ initialCountry }) => {
+  const [selectedCountry, setSelectedCountry] = useState(initialCountry);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isPasteClicked, setIsPasteClicked] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -59,7 +63,7 @@ export default function Home() {
       <div className="bg-white p-4 rounded-lg shadow-lg w-96">
         <div className="flex items-center mb-4 bg-neutral-50 border border-slate-200 rounded-md relative">
           <button
-            className="flex items-center w-full pl-2 min-w-fit gap-0 flex-wrap"
+            className="flex items-center w-fit pl-2 min-w-fit gap-0 flex-wrap"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             <Image width={0} height={0} sizes="100" src={selectedCountry.img} alt={selectedCountry.code} className="w-9 h-6 rounded-sm mr-2" />
@@ -113,4 +117,30 @@ export default function Home() {
       </div>
     </div>
   )
+}
+export default Home
+
+export async function getServerSideProps(context: any) {
+  let userCountry = countryCode[0]; // Default country
+
+  try {
+    const res = await fetch(`https://ipapi.co/json/`);
+    const data = await res.json();
+
+    const foundCountry = countryCode.find(
+      (country) => country.code === data.country_code
+    );
+
+    if (foundCountry) {
+      userCountry = foundCountry;
+    }
+  } catch (error) {
+    console.error('Error detecting location:', error);
+  }
+
+  return {
+    props: {
+      initialCountry: userCountry,
+    },
+  };
 }
