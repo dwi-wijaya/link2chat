@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
 import { useEffect, useRef, useState } from "react";
 import { countryCode } from "../constants/country.js";
-const inter = Inter({ subsets: ["latin"] });
+import { Raleway } from "next/font/google";
+
+const raleway = Raleway({ subsets: ["latin"] });
 
 interface HomeProps {
   initialCountry: {
@@ -78,7 +79,7 @@ const Home: React.FC<HomeProps> = ({ initialCountry }) => {
 
   return (
     <div
-      className={`flex justify-center items-center h-screen bg-gray-900`}
+      className={`${raleway.className} flex justify-center items-center h-screen bg-gray-900`}
     >
       <div className="bg-white p-4 rounded-lg shadow-lg w-96">
         <div className="flex items-center mb-4 bg-neutral-50 border border-slate-200 rounded-md relative">
