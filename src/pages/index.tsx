@@ -212,7 +212,7 @@ export async function getServerSideProps(context: any) {
   } catch (error) {
     console.error("Error detecting location:", error);
   }
-
+  console.log(userCountry);
   return {
     props: {
       initialCountry: userCountry,
