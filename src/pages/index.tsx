@@ -199,8 +199,10 @@ export async function getServerSideProps(context: any) {
   let userCountry = countryCode[0]; // Default country
 
   try {
-    const res = await fetch(`https://ipapi.co/json/`);
-    const data = await res.json();
+    const resip = await fetch(
+      `https://api.ipdata.co?api-key=${process.env.NEXT_PUBLIC_IPDATA}&fields=country_code`
+    );
+    const data = await resip.json();
     console.log(data);
 
     const foundCountry = countryCode.find(
